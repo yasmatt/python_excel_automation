@@ -1,10 +1,19 @@
-from  data_generator.generator import generate_romdom_dataset
-from  data_generator.xls import create_xls_from_csv
-
+import pandas as pd
 
 if '__main__' == __name__:
-    output_csv = 'sales_data_m.csv'
+    # エクセルファイル名
     output_xls = 'sales_data_m.xlsx'
-    sheet_name = '売上実績'
-    generate_romdom_dataset(output_csv, num_rows=1_000_000)
-    create_xls_from_csv(sheet_name, output_csv, output_xls)
+
+    # エクセルファイルを読み込む
+    sales_data_raw = pd.read_excel(output_xls)
+
+    # 顧客別に売上を集計
+    sales_data_by_company = sales_data_raw.groupby(['企業名']).sum()
+
+    # 顧客ｘ日付別で売上を集計
+    sales_data_by_company_date = sales_data_raw.groupby(['企業名', '日付']).sum()
+
+    # 結果を出力
+    with pd.ExcelWriter('results.xlsx') as writer:
+        sales_data_by_company.to_excel(writer, sheet_name='売上実績_顧客別')
+        sales_data_by_company_date.to_excel(writer, sheet_name='売上実績_顧客ｘ日付別')
