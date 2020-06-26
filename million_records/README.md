@@ -20,11 +20,18 @@ pipenv install
 作成されるファイルは毎回異なる値が入力されます
 ```
 cd million_records
-pipenv run python main.py
+pipenv run python random_dataset.py
 ```
 
 
-### JupyterLabを起動
+### 集計処理を行った後、ファイルを書き出す
+終わるまでに数分かかります  
+作成されるファイルは毎回異なる値が入力されます
+```
+pipenv run python main.py
+```
+
+## JupyterLabを起動する場合
 新しいターミナルを開いて下記コマンドを実行
 ```
 pipenv run jupyter lab
